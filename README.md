@@ -1,24 +1,23 @@
-# README
+# Development
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Build docker image of app:
 
-Things you may want to cover:
+```sudo docker build . -t 'uchi-test:0.1'```
 
-* Ruby version
+Launch docker container:
 
-* System dependencies
+```sudo docker run --name utc -p 3000:3000 uchi-test:0.1```
 
-* Configuration
+Open in browser: http://localhost:3000
 
-* Database creation
+# Deployment
 
-* Database initialization
+Push to Heroku:
 
-* How to run the test suite
+```sudo heroku container:push web -a uchi-test```
 
-* Services (job queues, cache servers, search engines, etc.)
+Release on Heroku:
 
-* Deployment instructions
+```sudo heroku container:release web -a uchi-test```
 
-* ...
+App can be found here: https://uchi-test.herokuapp.com
