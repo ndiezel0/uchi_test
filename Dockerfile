@@ -13,4 +13,4 @@ RUN apt-get update && apt-get install nodejs -y
 
 COPY . .
 
-ENTRYPOINT rails s
+CMD rails s -b 0.0.0.0 -p $PORT
