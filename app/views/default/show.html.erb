@@ -1,0 +1,21 @@
+<%= render partial: 'default/search', locals: { default: params[:repo] } %>
+<% if @collaborators.nil? %>
+  <h3>Repository not found</h3>
+<% elsif @collaborators.empty? %>
+  <h3>No contributors</h3>
+<% else %>
+  <h3>Results</h3>
+  <div>
+    <% @collaborators.each_with_index do |collaborator, index| %>
+      <p>
+    <span>
+      <%= collaborator %>
+    </span>
+        <%= link_to 'download pdf', pdf_path(contrib: collaborator, project: @project, placement: index + 1) %>
+      </p>
+    <% end %>
+  </div>
+  <p>
+    <%= link_to 'download zip(%s)' % @collaborators.length, pdf_zip_path(project: @project, contribs: @collaborators) %>
+  </p>
+<% end %>

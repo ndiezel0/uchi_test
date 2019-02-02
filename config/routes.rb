@@ -1,3 +1,6 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  root 'default#index'
+  get 'search', to: 'default#show', as: :search
+  get 'pdf', to: 'default#pdf', as: :pdf
+  get 'pdf_zip', to: 'default#pdf_zip', as: :pdf_zip
 end
