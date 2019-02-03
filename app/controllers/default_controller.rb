@@ -12,7 +12,7 @@ class Github
     @options = {query: {page: 1}}
   end
 
-  def collaborators(owner, project)
+  def collaborators(owner = nil, project = nil)
     self.class.get("/repos/%s/%s/contributors" % [owner, project], @options)
   end
 end
@@ -50,7 +50,7 @@ class DefaultController < ApplicationController
 
   def gen_zip(project, contributors)
     filename = Rails.root.join("tmp", "%s.zip" % project)
-    File.delete filename
+    FileUtils.rm_f filename
     Zip::File.open(filename, Zip::File::CREATE) do |zipfile|
       contributors.each_with_index do |contributor, index|
         zipfile.add "%s.pdf" % contributor, gen_pdf(contributor, project, index + 1)
@@ -59,7 +59,7 @@ class DefaultController < ApplicationController
     filename
   end
 
-  def collaborators(url, **options)
+  def collaborators(url, *options)
     link = options.any? ? options : URI::parse(url).path.split('/')[1..2]
     @project = link.last
 
@@ -73,5 +73,8 @@ class DefaultController < ApplicationController
     else
       nil
     end
+  rescue URI::InvalidURIError
+    @project = 'none'
+    nil
   end
 end
